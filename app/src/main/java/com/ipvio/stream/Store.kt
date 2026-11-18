@@ -384,14 +384,6 @@ object Library {
         if (!watch.remove(id)) watch.add(0, id)
         prefs(c).edit().putString("watch", watch.joinToString("\n")).apply()
     }
-
-    /** Reads the lists again after the live sync (W-010b) has written merged data into the file. Main thread. */
-    fun reload(c: Context) {
-        val f = (prefs(c).getString("favs", "") ?: "").split("\n").filter { it.isNotBlank() }
-        val w = (prefs(c).getString("watch", "") ?: "").split("\n").filter { it.isNotBlank() }
-        if (f != favs.toList()) { favs.clear(); favs.addAll(f) }
-        if (w != watch.toList()) { watch.clear(); watch.addAll(w) }
-    }
 }
 
 object QualityStore {
@@ -432,12 +424,6 @@ object History {
     fun remove(c: Context, id: String) {
         if (!ids.remove(id)) return
         prefs(c).edit().putString("ids", ids.joinToString("\n")).apply()
-    }
-
-    /** Reads the list again after the live sync (W-010b). Main thread. */
-    fun reload(c: Context) {
-        val l = (prefs(c).getString("ids", "") ?: "").split("\n").filter { it.isNotBlank() }
-        if (l != ids.toList()) { ids.clear(); ids.addAll(l) }
     }
 }
 
@@ -484,28 +470,16 @@ object WatchStore {
 
     fun init(c: Context) {
         if (entries.isNotEmpty()) return
-        entries.addAll(read(c))
-    }
-
-    private fun read(c: Context): List<Entry> {
-        val s = prefs(c).getString("e", null) ?: return emptyList()
-        val out = ArrayList<Entry>()
+        val s = prefs(c).getString("e", null) ?: return
         try {
             val a = JSONArray(s)
             for (i in 0 until a.length()) {
                 val o = a.getJSONObject(i)
-                out.add(Entry(o.getString("i"), o.getString("t"), o.getString("u"), o.getLong("p"), o.getLong("d"), o.getLong("ts"),
+                entries.add(Entry(o.getString("i"), o.getString("t"), o.getString("u"), o.getLong("p"), o.getLong("d"), o.getLong("ts"),
                     o.optInt("s"), o.optInt("e"), o.optBoolean("n")))
             }
         } catch (e: Exception) {
         }
-        return out
-    }
-
-    /** Reads the entries again after the live sync (W-010b). Main thread. */
-    fun reload(c: Context) {
-        val l = read(c)
-        if (l != entries.toList()) { entries.clear(); entries.addAll(l) }
     }
 
     /**
@@ -623,12 +597,6 @@ object EpProgress {
     fun clear(c: Context) {
         cache.clear()
         prefs(c).edit().clear().apply()
-    }
-
-    /** Forgets the cached series after the live sync (W-010b) has written merged progress into the file. */
-    @Synchronized
-    fun reload() {
-        cache.clear()
     }
 }
 
