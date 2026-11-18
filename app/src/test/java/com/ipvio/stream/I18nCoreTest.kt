@@ -45,6 +45,18 @@ class I18nCoreTest {
         assertEquals("Subtitle style", I18nCore.translate("Untertitel-Stil", EN))
         assertEquals("Playback speed", I18nCore.translate("Wiedergabe-Tempo", EN))
     }
+    @Test fun portuguesBrasil_e_detectado_e_traduzido() {
+        I18nCore.load(DictA, DictB, DictC, DictD, DictE, DictF, DictG, DictH, DictI, DictJ, DictK, DictL, DictM, DictN, DictO)
+        val pt = I18nCore.CODES.indexOf("pt")
+        I18nCore.loadColumn(pt, DictPt)
+        assertEquals("pt-BR deve ser reconhecido", pt, I18nCore.indexForSystem("pt-BR"))
+        assertEquals("Português (Brasil)", I18nCore.NATIVE[pt])
+        assertEquals("Configurações", I18nCore.translate("Einstellungen", pt))
+        assertEquals("TV ao vivo", I18nCore.translate("Live TV", pt))
+        assertEquals("Nome de usuário", I18nCore.translate("Benutzername", pt))
+        assertEquals("Continuar {0}", I18nCore.translate("Fortsetzen {0}", pt))
+    }
+
     @Test fun systemLanguage() {
         assertEquals(TR, I18nCore.indexForSystem("tr"))
         assertEquals(EN, I18nCore.indexForSystem("ja"))
