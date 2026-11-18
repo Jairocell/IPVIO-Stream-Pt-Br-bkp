@@ -48,19 +48,6 @@ Untertitel-Suche (SubDL) findet bei Serien wieder Treffer¦Subtitle search (SubD
 Bildformate heißen so, wie sie wirken („Zuschneiden“)¦Aspect modes are named after what they do (“Crop”)
 Viele fehlende Übersetzungen ergänzt¦Many missing translations added
 Hoch/Runter blättert¦Up/Down scrolls
-# What's new 1.4.3
-Handy: neue Einstellungen über das Zahnrad oben – Playlists, Kategorien sortieren und ausblenden, Jugendschutz, Sprache¦Phone: new settings behind the gear at the top – playlists, sort and hide categories, parental control, language
-Handy: neuer Reiter „Sport“ mit den Spielen von heute, deinen Lieblingsteams und „Meine Liste“; Spiele direkt am Fernseher starten¦Phone: new “Sport” tab with today’s games, your favorite teams and “My list”; start games right on the TV
-Filme und Serien: Kategorien mit Hoch/Runter verschieben, das Menü bleibt offen, neu „Ans Ende verschieben“¦Movies and series: move categories with Up/Down, the menu stays open, new “Move to bottom”
-Playlist wechseln geht schneller: die gespeicherte Liste wird gelesen statt neu heruntergeladen¦Switching playlists is faster: the stored list is read instead of downloaded again
-Bildformat: Hinweis, wenn das Bild schon das Format des Fernsehers hat¦Aspect ratio: a hint when the picture already has the shape of the TV
-Playlist wechseln zeigt nicht mehr „Noch keine Sender“¦Switching playlists no longer shows “No channels yet”
-Live TV: Links springt zur gewählten Kategorie, Rechts öffnet die Senderliste¦Live TV: Left goes to the chosen category, Right opens the channel list
-Player: „Zuschneiden“ und „Strecken“ wirken wieder¦Player: “Crop” and “Stretch” work again
-Einstellungen: Meldungen unter den Knöpfen sind sofort zu sehen¦Settings: messages below the buttons are visible right away
-WLAN-Übertragung: der Fokus bleibt nach Start und Stopp auf dem Knopf¦Wi-Fi transfer: the focus stays on the button after start and stop
-„Was ist neu“ erscheint auch nach einer Test-Version¦“What’s new” also appears after a test version
-Update in der App: „Die Signatur konnte nicht geprüft werden“ stoppt das Update nicht mehr¦In-app update: “The signature could not be checked” no longer stops the update
 """
 
 /**
@@ -70,6 +57,7 @@ Update in der App: „Die Signatur konnte nicht geprüft werden“ stoppt das Up
 fun loadWishboxTexts() {
     I18nCore.load(DictW)
     I18nCore.loadColumn(I18nCore.CODES.indexOf("nl"), DictNlW)
+    I18nCore.loadColumn(I18nCore.CODES.indexOf("pt"), DictPtW)
 }
 
 // Dutch column for the rows above
@@ -95,4 +83,21 @@ Zurück schließt das Menü¦Terug sluit het menu
 Aus „Zuletzt gesehen“ entfernt¦Verwijderd uit „Onlangs bekeken“
 Erwachsenen-Inhalte nie auf den Startseiten¦Inhoud voor volwassenen nooit op de startpagina’s
 Zeigt Titel und Sender für Erwachsene nie in den Reihen der Startseiten (Start, Filme, Serien), auch nicht unter „Zuletzt geschaut“ oder „Weiter schauen“. In Live TV, in den Kategorien und in der Suche bleiben sie erreichbar.¦Toont titels en zenders voor volwassenen nooit in de rijen van de startpagina’s (Start, Films, Series), ook niet onder „Onlangs bekeken“ of „Verder kijken“. In live-tv, in de categorieën en bij zoeken blijven ze bereikbaar.
+"""
+
+
+// Brazilian Portuguese translations for Wishbox additions.
+val DictPtW = """
+Filme und Serien direkt zu den Kategorien¦Filmes e séries diretamente para as categorias
+Was ist neu¦Novidades
+Version¦Versão
+Untertitel-Verzögerung¦Atraso das legendas
+Ton-Verzögerung¦Atraso do áudio
+Später¦Mais tarde
+Früher¦Mais cedo
+Aktuell¦Atual
+Zurücksetzen¦Redefinir
+Zurück schließt das Menü¦Voltar fecha o menu
+Aus „Zuletzt gesehen“ entfernt¦Removido de “Assistidos recentemente”
+Erwachsenen-Inhalte nie auf den Startseiten¦Não mostrar conteúdo adulto nas telas iniciais
 """

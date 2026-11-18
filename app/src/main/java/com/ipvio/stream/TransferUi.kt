@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,8 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -58,18 +55,7 @@ internal fun TransferSection(ctx: Context) {
         }
     }
     DisposableEffect(Unit) { onDispose { server.stop() } }
-    // Issue 11: the start button is replaced by the block below; give its stop button the focus so the focus is not lost
-    // (it went to the sidebar) and the page scrolls the address and QR code into view
-    val stopReq = remember { FocusRequester() }
-    val startReq = remember { FocusRequester() }
-    var started by remember { mutableStateOf(false) }
-    LaunchedEffect(serving) {
-        if (!serving && !started) return@LaunchedEffect   // page just opened: leave the focus where it is
-        started = true
-        kotlinx.coroutines.delay(50)
-        runCatching { (if (serving) stopReq else startReq).requestFocus() }
-    }
-    if (!serving) PillButton("Übertragung im WLAN starten", Modifier.focusRequester(startReq), icon = AIcon.Phone) { serving = server.start() }
+    if (!serving) PillButton("Übertragung im WLAN starten", icon = AIcon.Phone) { serving = server.start() }
     else {
         Column(
             Modifier.clip(RoundedCornerShape(DS.RadiusM)).background(Color(0x14FFFFFF)).padding(16.dp),
@@ -87,7 +73,7 @@ internal fun TransferSection(ctx: Context) {
                 }
                 Text("Altes Gerät: Sicherung herunterladen. Neues Gerät: hier ebenfalls starten und die Datei einspielen. Danach startet die App neu.", color = Muted, fontSize = 14.sp)
             }
-            PillButton("Übertragung beenden", Modifier.focusRequester(stopReq)) { server.stop(); serving = false }
+            PillButton("Übertragung beenden") { server.stop(); serving = false }
         }
     }
     UndoRestoreRow(ctx)
